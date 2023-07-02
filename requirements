@@ -1,0 +1,9 @@
+certifi==2023.5.7
+numpy==1.24.4
+pandas==2.0.3
+pymongo==4.2.0
+python-dateutil==2.8.2
+pytz==2023.3
+-e git+https://github.com/rajandevkota98/air-pressure-sensor-fault-detection.git@5fd82c30860a4484e040d34503f1bfcfd47b5111#egg=sensor
+six==1.16.0
+tzdata==2023.3
