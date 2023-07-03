@@ -1,2 +1,2 @@
 DATABASE_NAME = 'ineuron'
-collection_name ='car'
+COLLECTION_NAME ='car'
