@@ -30,3 +30,14 @@ DATA_INGESTION_INGESTED_DIR :str = 'ingested'
 DATA_INGESTION_TRAIN_TEST_SPLIT_RATIO:float = 0.2
 
 
+"""
+Data Validation Related Constant Start with DATA_VALIDATION"
+
+"""
+DATA_VALIDATION_DIR:str = 'data_validation'
+DATA_VALIDATION_VALID_DIR:str = 'validated'
+DATA_VALIDATION_INVALID_DIR:str = 'invalid'
+DATA_VALIDATION_DRIFT_REPORT:str = 'drfift_report'
+DATA_VALIDATION_DRIFT_REPORT_FILE_NAME:str ='report.yaml'
+
+
