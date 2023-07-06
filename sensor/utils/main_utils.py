@@ -1,6 +1,7 @@
 
 import numpy as np
 import dill
+from sensor.logger import logging
 
 
 from sensor.exception import SensorException
@@ -29,7 +30,7 @@ def write_yaml_file(file_path, content:object, replace:bool = False)->None:
     
 
 
-def save_numpy_array_data(file_path:str, array:np.array)->np.array:
+def save_numpy_array_data(file_path:str, array:np.array)->None:
     """
     save numpy array on the location
     """
@@ -49,8 +50,16 @@ def load_numpy_array_data(file_path:str)->np.array:
     """
     try:
         with open(file_path, 'rb') as file_:
-            dill.load(file_)
+            np.load(file_)
     except Exception as e:
         raise SensorException(e,sys)
 
 
+def save_object(file_path:str, obj:object)->object:
+    try:
+        logging.info('ENtered the save_object mthod of mainutiles')
+        os.makedirs(os.path.dirname(file_path),exist_ok=True)
+        with open(file_path, 'wb') as file_:
+            dill.dump(obj, file_)
+    except Exception as e:
+        raise SensorException(e,sys)
