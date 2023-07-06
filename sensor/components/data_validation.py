@@ -102,9 +102,6 @@ class DataValidation:
             
             if len(error_message)>0:
                 raise Exception(error_message)
-            
-      
-                
 
                 #Let check data drift
             status = self.detect_dataset_drift(base_df=train_dataframe,current_df=test_dataframe)

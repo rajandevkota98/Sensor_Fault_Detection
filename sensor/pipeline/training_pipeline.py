@@ -40,7 +40,7 @@ class TrainPipeline:
         try:
             logging.info('starting data transformation')
             data_transformation_config = DataTransformationConfig(training_pipeline_config=self.training_pipeline_config)
-            data_transformation = DataTransformation(data_transformation_config=data_transformation, data_validation_artifact=data_validation_artifact)
+            data_transformation = DataTransformation(data_transformation_config=data_transformation_config, data_validation_artifact=data_validation_artifact)
         except Exception as e:
             raise SensorException(e,sys)
             

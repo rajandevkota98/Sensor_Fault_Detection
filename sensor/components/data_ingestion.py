@@ -4,7 +4,6 @@ from sensor.logger import logging
 from sensor.exception import SensorException
 import os,sys
 import pandas as pd
-from pandas import DataFrame
 from sensor.data_access.sensor_data import SensorData
 from sensor.constant.database import COLLECTION_NAME
 from sklearn.model_selection import train_test_split
@@ -21,7 +20,7 @@ class DataIngestion:
         except Exception as e:
             raise SensorException(e,sys)
         
-    def export_data_into_feature_store(self,)->DataFrame:
+    def export_data_into_feature_store(self,)->pd.DataFrame:
         """
         Export the mongodb data into  the feature store folder
         """
@@ -39,16 +38,9 @@ class DataIngestion:
 
         except Exception as e:
             raise SensorException(e,sys)
-    @staticmethod
-    def drop_duplicate(data: pd.DataFrame)->pd.DataFrame:
-        try:
-            data = data.drop_duplicates()
-            return data
-        except Exception as e:
-            raise SensorException(e,sys)
 
 
-    def split_data_as_train_test(self, dataframe:DataFrame):
+    def split_data_as_train_test(self, dataframe:pd.DataFrame):
         """
         Split the data into test data ans train data
         """
@@ -75,7 +67,6 @@ class DataIngestion:
     def initiate_data_ingestion(self,)->DataIngestionArtifact:
         try:
             dataframe = self.export_data_into_feature_store()
-            dataframe = DataIngestion.drop_duplicate(dataframe)
             dataframe = dataframe.drop(self._schema_config["drop_columns"],axis=1)
             self.split_data_as_train_test(dataframe=dataframe)
             data_ingestion_artifact = DataIngestionArtifact(train_file_path=self.data_ingestion_config.training_file_path,test_file_path=self.data_ingestion_config.testing_file_path)

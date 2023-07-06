@@ -44,6 +44,7 @@ class DataTransformation:
                     )
                 ]
             )
+            return preprocessor
 
         except Exception as e:
             raise SensorException(e,sys)
