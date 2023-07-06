@@ -15,7 +15,6 @@ TEST_FILE_NAME:str = 'test.csv'
 
 PREPROCESSING_OBJECT_FILE_NAME = 'preprocessing.pkl'
 MODEL_FILE_NAME = 'model.pkl'
-
 SCHEMA_FILE_PATH = os.path.join('config','schema.yaml')
 SCHEMA_DROP_COLS = 'drop_columns'
 
@@ -41,3 +40,9 @@ DATA_VALIDATION_DRIFT_REPORT:str = 'drfift_report'
 DATA_VALIDATION_DRIFT_REPORT_FILE_NAME:str ='report.yaml'
 
 
+"""
+DATA  TRANSFORMATION RELATED CONSTANT
+"""
+DATA_TRANSFORMATION_DIR_NAME:str ='data_transformation'
+DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR:str = 'transformed'
+DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR:str= 'transformed_object'
