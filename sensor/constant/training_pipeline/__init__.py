@@ -49,7 +49,7 @@ DATA_TRANSFORMATION_TRANSFORMED_OBJECT_DIR:str= 'transformed_object'
 
 
 """
-Model Trainer Related Directory
+Model Trainer Related Constant
 """
 
 MODEL_TRAINER_DIR_NAME:str = 'model_trainer'
@@ -58,3 +58,9 @@ MODEL_TRAINER_TRAINED_MODEL_NAME:str = 'model.pkl'
 MODEL_TRAINER_EXPECTED_SCORE:float = 0.6
 
 
+"""
+Model Evaluation Related COntant
+"""
+MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
+MODEL_EVALUTION_DIRECTORY_NAME:str = 'model_evalution'
+MODEL_EVALUTION_REPORT_FILE_NAME:str = 'report.yaml'
