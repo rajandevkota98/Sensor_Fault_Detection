@@ -4,8 +4,9 @@ from sensor.entity.artifact_entity import DataTransformationArtifact,ModelTraine
 from sensor.entity.config_entity import ModelTrainerConfig
 import os,sys
 from xgboost import XGBClassifier
-from sensor.utils.main_utils import load_numpy_array_data
+from sensor.utils.main_utils import load_numpy_array_data,load_object, save_object
 from sensor.ml.metrics.classification_metric import  get_classification_score
+from sensor.ml.model.estimator import SensorModel
 
 
 class ModelTrainer:
@@ -29,7 +30,7 @@ class ModelTrainer:
     def initiate_model_trainer(self, )->ModelTrainerArtifact:
         try:
             test_file_path = self.data_transformatin_artifact.transfomed_test_file_path
-            train_file_path = self.data_transformatin_artifact.transfomed_test_file_path
+            train_file_path = self.data_transformatin_artifact.transfomed_train_file_path
             logging.info('loading the test and train data')
             train_array = load_numpy_array_data(train_file_path)
             test_array = load_numpy_array_data(test_file_path)
@@ -57,23 +58,21 @@ class ModelTrainer:
             if diff>0.05:
                 raise Exception('Model Overfitting')
             
+            preprocessor = load_object(file_path=self.data_transformatin_artifact.transformed_object_file_path)
             
+            model_dir_path = os.path.dirname(self.model_trainer_config.trained_model_file_path)
+            os.makedirs(model_dir_path, exist_ok=True)
+            sensor_model = SensorModel(preprocessor=preprocessor, model=model)
+            save_object(self.model_trainer_config.trained_model_file_path,sensor_model)
 
+            #model trainer artifact
+            model_trainer_artifact = ModelTrainerArtifact(
+                trained_model_file_path=self.model_trainer_config.trained_model_file_path,
+                train_metric_artifact=classifcation_train_metrics,
+                test_metric_artifact=classifcation_test_metrics
             
-
-            
-
-
-                
-
-
-            
-
-            
-
-
-
-
+            )
+            return model_trainer_artifact
 
         except Exception as e:
             raise SensorException(e,sys)
