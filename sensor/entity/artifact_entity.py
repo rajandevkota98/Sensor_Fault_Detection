@@ -24,3 +24,17 @@ class DataTransformationArtifact:
     transfomed_test_file_path:bool
     transformed_object_file_path:bool
 
+
+
+@dataclass
+class ClassificationMetricsArtifact:
+    f1_score:float
+    precision_score:float
+    recall_score:float
+
+
+
+@dataclass
+class ModelTrainerArtifact:
+    trained_model_file_path:str
+    metric_artifact:ClassificationMetricsArtifact
