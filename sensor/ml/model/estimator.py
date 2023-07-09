@@ -1,6 +1,7 @@
 from sensor.exception import SensorException
 from sensor.logger import logging
 import os,sys
+from sensor.constant.training_pipeline import SAVED_MODEL_DIR,MODEL_FILE_NAME
 
 class TargetMapping:
     def __init__(self) -> None:
@@ -30,5 +31,40 @@ class SensorModel:
             x_transform = self.preprocessor.transform(x)
             y_hat = self.model.predict(x_transform)
             return y_hat
+        except Exception as e:
+            raise SensorException(e,sys)
+        
+class ModelResolver:
+    def __init__(self,model_dir:SAVED_MODEL_DIR) -> None:
+        try:
+            self.model_dir= model_dir
+        except Exception as e:
+            raise SensorException(e,sys)
+        
+    def get_best_model(self,)->str:
+        try:
+            timestamps = list(map(int,os.listdir(self.model_dir)))
+            latest_timestamp = max(timestamps)
+            latest_model_path = os.path.join(self.model_dir,latest_timestamp, MODEL_FILE_NAME)
+            return latest_model_path
+        except Exception as e:
+            raise SensorException(e,sys)
+        
+
+    
+    def is_model_exist(self,)->str:
+        try:
+            if not os.path.exists(self.model_dir):
+                return False
+            
+            timestamp = os.listdir(self.model_dir)
+            if len(timestamp)==0:
+                return False
+            
+            latest_model_path = self.get_best_model()
+            if not os.path.exists(latest_model_path):
+                return False
+            return True
+
         except Exception as e:
             raise SensorException(e,sys)
