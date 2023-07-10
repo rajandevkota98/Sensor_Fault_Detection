@@ -3,7 +3,7 @@ from sensor.logger import logging
 import os, sys
 from sensor.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig
 from sensor.pipeline.training_pipeline import TrainPipeline
-from fastapi import FastAPI,File,UploadFile
+from fastapi import FastAPI,File,UploadFile,Request,HTTPException
 from sensor.constant.application import APP_PORT,APP_HOST
 from starlette.responses import RedirectResponse
 from uvicorn import run as app_run
@@ -13,6 +13,7 @@ from sensor.ml.model.estimator import ModelResolver,TargetMapping
 from sensor.utils.main_utils import load_object
 import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
+
 
 
 
@@ -43,14 +44,13 @@ async def train_route():
         train_pipeline.run_pipeline()
         return Response('Training successful')
     except  Exception as e:
-        raise Response(f'Error encoutered: {e}')
+        raise HTTPException(status_code=500, detail=f'Error encountered: {e}')
 
 
 @app.get('/predict')
-async def predict_route():
+async def predict_route(request:Request,file: UploadFile = File(...)):
     try:
-        #get data from user as csv
-        df = None
+        df = pd.read_csv(file.file)
         model_resolver = ModelResolver(model_dir=SAVED_MODEL_DIR)
         if not model_resolver.is_model_exist():
             return Response('Model is not trained yet.')
@@ -62,8 +62,7 @@ async def predict_route():
         df['predicted_columns'].replace(TargetMapping.reverse_mapping(), inplace = True)
         return df.to_html()        
     except Exception as e:
-        raise Response(f'Error {e}')
-
+        raise HTTPException(status_code=500, detail=f'Error encountered: {e}')
 
 
 if __name__ =='__main__':
