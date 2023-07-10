@@ -81,10 +81,10 @@ class ModelPusherConfig:
         self.model_evaluation_dir:str = os.path.join(
             training_pipeline_config.artifact_dir,training_pipeline.MODEL_PUSHER_DIR_NAME
         )
-        self.model_path_path = os.path.join(self.model_evaluation_dir)
+        self.model_file_path = os.path.join(self.model_evaluation_dir)
         timestamp = round(datetime.now().timestamp())
 
-        self.saved_model_dir = os.path.join(
+        self.saved_model_path = os.path.join(
             training_pipeline.SAVED_MODEL_DIR,
             f"{timestamp}",
             training_pipeline.MODEL_FILE_NAME
