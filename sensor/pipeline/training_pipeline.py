@@ -55,7 +55,7 @@ class TrainPipeline:
             logging.info('starting model trainer')
             logging.info('config')
 
-            model_trainer_config = DataTransformationConfig(training_pipeline_config=self.training_pipeline_config)
+            model_trainer_config = ModelTrainerConfig(training_pipeline_config=self.training_pipeline_config)
             model_trainer = ModelTrainer(model_trainer_config=model_trainer_config, data_transformatin_artifact=data_transformation_artifact)
             logging.info('artifact')
 
@@ -93,7 +93,7 @@ class TrainPipeline:
             data_validation_artifact:DataValidationArtifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             data_transformation_artifact:DataTransformationArtifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
             model_trainer_artifact:ModelTrainerArtifact= self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
-            model_evaluation_artifact:ModelEvalutionArtifact = self.start_model_evaluation(data_validation_artifact=data_transformation_artifact,model_trainer_artifact=model_trainer_artifact)
+            model_evaluation_artifact:ModelEvalutionArtifact = self.start_model_evaluation(data_validation_artifact=data_validation_artifact,model_trainer_artifact=model_trainer_artifact)
             if not model_evaluation_artifact.is_model_accepted:
                 raise Exception('Trained Model is not better than the best model')
             model_pusher_artifact:ModelPusherArtifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)

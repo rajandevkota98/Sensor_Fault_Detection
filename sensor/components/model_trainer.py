@@ -43,9 +43,9 @@ class ModelTrainer:
             )
             model = self.train_model(x_train, y_train)
             y_train_pred = model.predict(x_train)
-            classifcation_train_metrics = get_classification_score(y_true=x_train,y_predicted=y_train_pred)
+            classifcation_train_metrics = get_classification_score(y_true=y_train,y_predicted=y_train_pred)
             y_test_pred = model.predict(x_test)
-            classifcation_test_metrics = get_classification_score(y_true=x_test,y_predicted=y_train_pred)
+            classifcation_test_metrics = get_classification_score(y_true=y_test,y_predicted=y_test_pred)
             
             logging.info('Overfitting -- Underfitting')
             if classifcation_train_metrics.f1_score < self.model_trainer_config.expected_accuracy:

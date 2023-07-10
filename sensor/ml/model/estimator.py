@@ -35,7 +35,7 @@ class SensorModel:
             raise SensorException(e,sys)
         
 class ModelResolver:
-    def __init__(self,model_dir:SAVED_MODEL_DIR) -> None:
+    def __init__(self,model_dir=SAVED_MODEL_DIR) -> None:
         try:
             self.model_dir= model_dir
         except Exception as e:

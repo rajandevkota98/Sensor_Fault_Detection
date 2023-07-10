@@ -36,7 +36,7 @@ build
 
 # Installer logs
 logs/
-artifact/
+artifact/*
 pip-log.txt
 pip-delete-this-directory.txt
 

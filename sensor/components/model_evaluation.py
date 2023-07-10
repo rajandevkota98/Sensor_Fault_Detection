@@ -45,7 +45,7 @@ class ModelEvaluation:
             train_model_file_path = self.model_trainer_artifact.trained_model_file_path
             is_model_accepted = True
 
-            if model_resolver.is_model_exist():
+            if not model_resolver.is_model_exist():
                 logging.info('no better model better found')
                 model_evaluation_artifact = ModelEvalutionArtifact(is_model_accepted=is_model_accepted,
                     changed_accuracy=None,
