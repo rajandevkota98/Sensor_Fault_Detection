@@ -65,3 +65,12 @@ Model Evaluation Related COntant
 MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE: float = 0.02
 MODEL_EVALUTION_DIRECTORY_NAME:str = 'model_evalution'
 MODEL_EVALUTION_REPORT_FILE_NAME:str = 'report.yaml'
+
+
+"""
+Model Pusher Related constant
+"""
+
+MODEL_PUSHER_DIR_NAME:str = 'model_pusher'
+MODEL_PUSHER_SAVED_MODEL_SIR= SAVED_MODEL_DIR
+
