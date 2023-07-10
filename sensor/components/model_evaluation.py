@@ -57,15 +57,19 @@ class ModelEvaluation:
         
             logging.info('models are there')
             latest_model_path = model_resolver.get_best_model_path()
+            logging.info('loading latest_model')
             latest_model = load_object(latest_model_path)
+            logging.info('loading trained model')
             train_model = load_object(train_model_file_path)
 
 
             y_trained_pred = train_model.predict(df)
             y_latest_pred  =latest_model.predict(df)
-
+            logging.info('metrics')
             trained_metric =get_classification_score(y_true,y_trained_pred)
+            logging.info(f"trained metrics: {trained_metric}")
             latest_metric = get_classification_score(y_true,y_latest_pred)
+            logging.info(f"The latest best model")
 
             improved_accuracy = trained_metric.f1_score-latest_metric.f1_score
 

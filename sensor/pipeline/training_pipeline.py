@@ -11,6 +11,7 @@ from sensor.components.model_evaluation import ModelEvaluation
 from sensor.components.model_pusher import ModelPusher
 
 class TrainPipeline:
+    is_pipeline_running = False
     def __init__(self) -> None:
         self.training_pipeline_config = TrainingPipelineConfig()
 
@@ -31,6 +32,7 @@ class TrainPipeline:
         try:
 
             logging.info('starting data validation')
+
             data_validation_config = DataValidationConfig(training_pipeline_config=self.training_pipeline_config)
             data_validation = DataValidation(data_ingestion_artifact=data_ingestion_artifact,data_validation_config=data_validation_config)
             data_validation_artifact = data_validation.initiate_data_validation()
@@ -81,7 +83,7 @@ class TrainPipeline:
         try:
             logging.info('starting model pusher')
             model_pusher_config = ModelPusherConfig(training_pipeline_config=self.training_pipeline_config)
-            model_pusher = ModelPusher(model_evaluation_artifact=model_evaluation_artifact)
+            model_pusher = ModelPusher(model_evaluation_artifact=model_evaluation_artifact,model_pusher_config=model_pusher_config)
             model_pusher_artifact = model_pusher.initate_model_pusher()
             return model_pusher_artifact
         except Exception as e:
@@ -89,6 +91,7 @@ class TrainPipeline:
             
     def run_pipeline(self):
         try:
+            TrainPipeline().is_pipeline_running=True
             data_ingestion_artifact:DataIngestionArtifact = self.start_data_ingestion()
             data_validation_artifact:DataValidationArtifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             data_transformation_artifact:DataTransformationArtifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
@@ -97,8 +100,10 @@ class TrainPipeline:
             if not model_evaluation_artifact.is_model_accepted:
                 raise Exception('Trained Model is not better than the best model')
             model_pusher_artifact:ModelPusherArtifact = self.start_model_pusher(model_evaluation_artifact=model_evaluation_artifact)
+            TrainPipeline().is_pipeline_running=False
 
         except Exception as e:
+            TrainPipeline().is_pipeline_running=False
             raise SensorException(e,sys)
 
 
