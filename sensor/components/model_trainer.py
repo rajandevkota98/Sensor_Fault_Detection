@@ -35,12 +35,12 @@ class ModelTrainer:
             train_array = load_numpy_array_data(train_file_path)
             test_array = load_numpy_array_data(test_file_path)
 
-            x_train,y_train,x_test,y_test={
+            x_train,y_train,x_test,y_test=(
                 train_array[:,:-1],
                 train_array[:,-1],
                 test_array[:,:-1],
                 test_array[:,-1]
-            }
+            )
             model = self.train_model(x_train, y_train)
             y_train_pred = model.predict(x_train)
             classifcation_train_metrics = get_classification_score(y_true=x_train,y_predicted=y_train_pred)

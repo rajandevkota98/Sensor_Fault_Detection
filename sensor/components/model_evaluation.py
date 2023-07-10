@@ -46,16 +46,16 @@ class ModelEvaluation:
             is_model_accepted = True
 
             if model_resolver.is_model_exist():
+                logging.info('no better model better found')
                 model_evaluation_artifact = ModelEvalutionArtifact(is_model_accepted=is_model_accepted,
                     changed_accuracy=None,
                     best_model_path=None,
                     trained_model_path=train_model_file_path,
                     train_model_metric_artifact=self.model_trainer_artifact.train_metric_artifact, 
                     best_model_metric_artifact=None)
-
-           
                 return model_evaluation_artifact
         
+            logging.info('models are there')
             latest_model_path = model_resolver.get_best_model_path()
             latest_model = load_object(latest_model_path)
             train_model = load_object(train_model_file_path)

@@ -53,8 +53,12 @@ class TrainPipeline:
     def start_model_trainer(self,data_transformation_artifact:DataTransformationArtifact):
         try:
             logging.info('starting model trainer')
+            logging.info('config')
+
             model_trainer_config = DataTransformationConfig(training_pipeline_config=self.training_pipeline_config)
             model_trainer = ModelTrainer(model_trainer_config=model_trainer_config, data_transformatin_artifact=data_transformation_artifact)
+            logging.info('artifact')
+
             model_trainer_artifact =model_trainer.initiate_model_trainer()
             return model_trainer_artifact
         except Exception as e:
@@ -63,6 +67,7 @@ class TrainPipeline:
     def start_model_evaluation(self, data_validation_artifact:DataValidationArtifact, model_trainer_artifact: ModelTrainerArtifact):
         try:
             logging.info('starting model evalutaion')
+            logging.info('config')
             model_evaluation_config = ModelEvalutionConfig(training_pipeline_config=self.training_pipeline_config)
             model_evaluation = ModelEvaluation(model_eval_config=model_evaluation_config ,data_validation_artifact=data_validation_artifact,model_trainer_artifact=model_trainer_artifact)
             model_evaluation_artifact = model_evaluation.initiate_model_evaluation()

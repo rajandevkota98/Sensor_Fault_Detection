@@ -50,7 +50,7 @@ def load_numpy_array_data(file_path:str)->np.array:
     """
     try:
         with open(file_path, 'rb') as file_:
-            np.load(file_)
+            return np.load(file_)
     except Exception as e:
         raise SensorException(e,sys)
 
