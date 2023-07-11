@@ -15,9 +15,6 @@ import pandas as pd
 from fastapi.middleware.cors import CORSMiddleware
 
 
-
-
-
 app = FastAPI()
 origins = ["*"]
 app.add_middleware(
@@ -34,7 +31,6 @@ async def index():
     return RedirectResponse(url="/docs")
 
 
-
 @app.get('/train')
 async def train_route():
     try:
@@ -44,7 +40,7 @@ async def train_route():
         train_pipeline.run_pipeline()
         return Response('Training successful')
     except  Exception as e:
-        raise HTTPException(status_code=500, detail=f'Error encountered: {e}')
+        return Response(f"Error Occurred! {e}")
 
 
 @app.get('/predict')
@@ -62,7 +58,7 @@ async def predict_route(request:Request,file: UploadFile = File(...)):
         df['predicted_columns'].replace(TargetMapping.reverse_mapping(), inplace = True)
         return df.to_html()        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f'Error encountered: {e}')
+        return Response(f"Error Occurred! {e}")
 
 
 if __name__ =='__main__':

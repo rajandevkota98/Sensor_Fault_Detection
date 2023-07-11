@@ -36,10 +36,13 @@ class ModelEvaluation:
             test_df = pd.read_csv(valid_test_file_path)
             logging.info('Merging dataframe')
             df = pd.concat([train_df,test_df])
+            df = df.replace('na', np.nan)
+            df = df.drop_duplicates()
             y_true = df[TARGET_COLUMN]
             y_true.replace(TargetMapping().to_dict(),inplace=True)
             logging.info('dropping target columns')
             df.drop(TARGET_COLUMN,axis=1,inplace=True)
+
             
             model_resolver = ModelResolver()
             train_model_file_path = self.model_trainer_artifact.trained_model_file_path
@@ -81,7 +84,7 @@ class ModelEvaluation:
 
             model_evaluation_artifact = ModelEvalutionArtifact(
                 is_model_accepted=is_model_accepted,
-                improved_accuracy=improved_accuracy,
+                changed_accuracy=improved_accuracy,
                 best_model_path=latest_model_path,
                 trained_model_path=train_model_file_path,
                 train_model_metric_artifact=trained_metric, 

@@ -72,7 +72,7 @@ class DataIngestion:
             data_ingestion_artifact = DataIngestionArtifact(train_file_path=self.data_ingestion_config.training_file_path,test_file_path=self.data_ingestion_config.testing_file_path)
             return data_ingestion_artifact
         except Exception as e:
-            raise SensorException
+            raise SensorException(e,sys)
         
 
 

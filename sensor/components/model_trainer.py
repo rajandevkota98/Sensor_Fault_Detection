@@ -70,7 +70,6 @@ class ModelTrainer:
                 trained_model_file_path=self.model_trainer_config.trained_model_file_path,
                 train_metric_artifact=classifcation_train_metrics,
                 test_metric_artifact=classifcation_test_metrics
-            
             )
             return model_trainer_artifact
 
