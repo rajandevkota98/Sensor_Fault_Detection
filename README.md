@@ -14,9 +14,8 @@ The problem is to reduce the cost due to unnecessary repairs. So it is required 
 
 
 
+# How to run?
+Before we run the project, make sure that you are having MongoDB in your local system, with Compass since we are using MongoDB for data storage. You also need AWS account to access the service like S3, ECR and EC2 instances.
 
 
-
-## Create a virtual environment
-`conda activate -n <virtual_env> python==3.8 -y`
 
