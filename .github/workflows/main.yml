@@ -92,7 +92,7 @@ jobs:
        
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 80:8080 --name=sensor -e MONGO_DB_URL='mongodb+srv://rajan98:rajan98@cluster0.rw7fcy2.mongodb.net/?retryWrites=true&w=majority' -e AWS_ACCESS_KEY_ID='AKIA3EFH25NKIBVNANG4' -e AWS_SECRET_ACCESS_KEY='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' -e AWS_REGION='ap-south-1' 764856167252.dkr.ecr.ap-south-1.amazonaws.com/aps-fault:latest
+         docker run -d -p 8081:8081 --name=sensor -e MONGO_DB_URL='mongodb+srv://rajan98:rajan98@cluster0.rw7fcy2.mongodb.net/?retryWrites=true&w=majority' -e AWS_ACCESS_KEY_ID='AKIA3EFH25NKIBVNANG4' -e AWS_SECRET_ACCESS_KEY='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' -e AWS_REGION='ap-south-1' 764856167252.dkr.ecr.ap-south-1.amazonaws.com/aps-fault:latest
 
 
       - name: Clean previous images and containers
