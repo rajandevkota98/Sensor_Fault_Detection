@@ -60,6 +60,5 @@ async def predict_route(request:Request,file: UploadFile = File(...)):
     except Exception as e:
         return Response(f"Error Occurred! {e}")
 
-
 if __name__ =='__main__':
     app_run(app, host = APP_HOST, port = APP_PORT)
