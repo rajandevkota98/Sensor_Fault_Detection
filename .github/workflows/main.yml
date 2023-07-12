@@ -86,15 +86,14 @@ jobs:
         run: |
          docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
 
-      - name: Stop and remove sensor container if running
-        run: |
-         docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
+      # - name: Stop and remove sensor container if running
+      #   run: |
+      #    docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
        
       - name: Run Docker Image to serve users
         run: |
-         docker run -d -p 8081:8081 --name=sensor -e MONGO_DB_URL='mongodb+srv://rajan98:rajan98@cluster0.rw7fcy2.mongodb.net/?retryWrites=true&w=majority' -e AWS_ACCESS_KEY_ID='AKIA3EFH25NKIBVNANG4' -e AWS_SECRET_ACCESS_KEY='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' -e AWS_REGION='ap-south-1' 764856167252.dkr.ecr.ap-south-1.amazonaws.com/aps-fault:latest
-
+         docker run -d -p 8081:8081 --name=sensor -e 'MONGO_DB_URL=${{ secrets.MONGO_DB_URL }}' -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
 
       - name: Clean previous images and containers
         run: |
-         docker system prune -f 
+         docker system prune -f
